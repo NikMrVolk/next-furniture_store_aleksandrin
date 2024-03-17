@@ -1,3 +1,75 @@
 {
-  "extends": "next/core-web-vitals"
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "next",
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "plugins": ["@typescript-eslint", "react", "react-func", "import"],
+    "ignorePatterns": ["jest.config.js", "createMockRouter.ts"],
+    "rules": {
+        "linebreak-style": ["warn", "unix"],
+        "no-var": "warn",
+        "semi": ["warn", "never"],
+        "indent": ["warn", 4],
+        "no-multi-spaces": "warn",
+        "space-in-parens": ["warn", "never"],
+        "no-multiple-empty-lines": ["warn", { "max": 1 }],
+        "prefer-const": "warn",
+        "no-use-before-define": "warn",
+        "arrow-body-style": ["warn", "as-needed"],
+        "complexity": ["warn", 4],
+        "max-statements": ["warn", 10],
+        "react/self-closing-comp": [
+            "warn",
+            {
+                "component": true,
+                "html": true
+            }
+        ],
+        "react-func/max-lines-per-function": [
+            "warn",
+            {
+                "max": 20,
+                "skipBlankLines": true,
+                "skipComments": true,
+                "IIFEs": true
+            }
+        ],
+        "import/order": [
+            "warn",
+            {
+                "newlines-between": "always",
+                "pathGroupsExcludedImportTypes": ["react"],
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                },
+                "groups": ["builtin", "external", "parent", "sibling", "index"],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "external",
+                        "position": "before"
+                    }
+                ]
+            }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "import/prefer-default-export": "off"
+    }
 }
