@@ -17,7 +17,6 @@ export default function Main() {
         e.preventDefault()
         authService.main('registration', value).then(d => setData(d.data))
     }
-    console.log(data)
 
     return (
         <section className="flex min-h-svh flex-col items-center justify-center gap-10">
