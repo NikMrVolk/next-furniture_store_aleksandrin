@@ -35,8 +35,10 @@ export const authService = {
         return response
     },
 
-    async logout() {
-        const response = await axiosClassic.post<string>('/auth/logout')
+    async logout(type: 'auto' | 'user') {
+        const axios = type === 'auto' ? axiosClassic : instance
+
+        const response = await axios.post<string>(`/auth/${type}-logout`)
 
         if (response.data === '') removeFromStorage()
 

@@ -51,7 +51,7 @@ export default function Main() {
                 <button
                     className="border"
                     onClick={() => {
-                        authService.logout()
+                        authService.logout('user')
                     }}
                 >
                     logout

@@ -44,7 +44,7 @@ instance.interceptors.response.use(
                     errorCatch(e) === 'Invalid refresh token' ||
                     errorCatch(e) === 'Refresh token not passed'
                 )
-                    authService.logout()
+                    authService.logout('auto')
             }
         }
         throw error
