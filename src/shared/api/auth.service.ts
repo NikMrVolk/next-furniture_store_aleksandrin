@@ -48,4 +48,22 @@ export const authService = {
     async users() {
         return instance.get<IUser[]>(`/auth`)
     },
+
+    async oAuth({
+        token,
+        name,
+        surname,
+    }: {
+        token: string
+        name: string | null
+        surname: string | null
+    }) {
+        const response = await axiosClassic.get<IAuthResponse>(`/auth/google/success`, {
+            params: { token, name, surname },
+        })
+
+        if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
+
+        return response
+    },
 }
