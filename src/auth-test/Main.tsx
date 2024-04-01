@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from 'react'
 
+import { Providers } from '@/shared/api/api.types'
 import { authService, IAuthResponse, IUser } from '@/shared/api/auth.service'
 
 export default function Main() {
@@ -12,38 +13,45 @@ export default function Main() {
         password: '',
         name: '',
     })
-    const [oAuthPopup, setOAuthPopup] = useState<null | Window>(null)
+    const [oAuthPopup, setOAuthPopup] = useState<{
+        popup: null | Window
+        provider: Providers | null
+    }>({ popup: null, provider: null })
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         authService.main('registration', value).then(d => setData(d.data))
     }
 
-    const handleWindowOpen = () => {
+    const handleWindowOpen = (provider: Providers) => {
         const width = 600
         const height = 700
         const left = window.screen.width / 2 - width / 2
         const top = window.screen.height / 2 - height / 2
 
         const popup = window.open(
-            'http://localhost:4000/api/auth/google',
+            `http://localhost:4000/api/auth/${provider}`,
             'oAuth',
             `height=${height}, width=${width}, top=${top}, left=${left}`,
         )
-        setOAuthPopup(popup)
+        setOAuthPopup({ popup, provider })
     }
 
     const handleOAuthComplete = async () => {
-        if (oAuthPopup?.location.href.includes('?token=')) {
-            const urlParams = new URLSearchParams(oAuthPopup?.location.search)
+        if (oAuthPopup?.popup?.location.href.includes('?token=')) {
+            const urlParams = new URLSearchParams(oAuthPopup?.popup?.location.search)
             const token = urlParams.get('token')
-            const name = urlParams.get('name')
-            const surname = urlParams.get('surname')
 
             if (token) {
-                setOAuthPopup(null)
-                oAuthPopup?.close()
-                const response = await authService.oAuth({ token, name, surname })
+                setOAuthPopup({ popup: null, provider: null })
+                oAuthPopup?.popup.close()
+                const response = await authService.oAuth({
+                    provider: oAuthPopup.provider as Providers,
+                    token,
+                    name: urlParams.get('name'),
+                    surname: urlParams.get('surname'),
+                    phone: urlParams.get('phone'),
+                })
                 setData(response.data)
             }
         }
@@ -60,7 +68,7 @@ export default function Main() {
                         console.error(message)
                     }
                 }
-            }, 100)
+            }, 500)
 
             return () => clearInterval(timer)
         }
@@ -94,8 +102,21 @@ export default function Main() {
                     submit
                 </button>
             </form>
-            <button className="border" onClick={handleWindowOpen}>
+            <button
+                className="border"
+                onClick={() => {
+                    handleWindowOpen(Providers.GOOGLE)
+                }}
+            >
                 google
+            </button>
+            <button
+                className="border"
+                onClick={() => {
+                    handleWindowOpen(Providers.YANDEX)
+                }}
+            >
+                yandex
             </button>
             <div className="flex flex-col">
                 {data?.name}

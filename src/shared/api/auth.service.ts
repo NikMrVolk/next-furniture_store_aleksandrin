@@ -1,4 +1,5 @@
 import { removeFromStorage, saveTokenStorage } from './api.helpers'
+import { Providers } from './api.types'
 import { axiosClassic, instance } from './axios'
 
 export interface IUser {
@@ -50,16 +51,20 @@ export const authService = {
     },
 
     async oAuth({
+        provider,
         token,
         name,
         surname,
+        phone,
     }: {
+        provider: Providers
         token: string
         name: string | null
         surname: string | null
+        phone: string | null
     }) {
-        const response = await axiosClassic.get<IAuthResponse>(`/auth/google/success`, {
-            params: { token, name, surname },
+        const response = await axiosClassic.get<IAuthResponse>(`/auth/${provider}/success`, {
+            params: { token, name, surname, phone },
         })
 
         if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
