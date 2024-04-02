@@ -30,7 +30,7 @@ export default function Main() {
         const top = window.screen.height / 2 - height / 2
 
         const popup = window.open(
-            `http://localhost:4000/api/auth/${provider}`,
+            `http://localhost:4000/api/oauth2/${provider}`,
             'oAuth',
             `height=${height}, width=${width}, top=${top}, left=${left}`,
         )
@@ -117,6 +117,14 @@ export default function Main() {
                 }}
             >
                 yandex
+            </button>
+            <button
+                className="border"
+                onClick={() => {
+                    handleWindowOpen(Providers.MAILRU)
+                }}
+            >
+                mailru
             </button>
             <div className="flex flex-col">
                 {data?.name}

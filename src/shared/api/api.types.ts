@@ -6,4 +6,5 @@ export enum EnumTokens {
 export enum Providers {
     GOOGLE = 'google',
     YANDEX = 'yandex',
+    MAILRU = 'mailru',
 }

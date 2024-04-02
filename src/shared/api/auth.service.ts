@@ -63,7 +63,7 @@ export const authService = {
         surname: string | null
         phone: string | null
     }) {
-        const response = await axiosClassic.get<IAuthResponse>(`/auth/${provider}/success`, {
+        const response = await axiosClassic.get<IAuthResponse>(`/oauth2/${provider}/success`, {
             params: { token, name, surname, phone },
         })
 
