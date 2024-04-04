@@ -27,9 +27,8 @@ export default function Main() {
         const height = 700
         const left = window.screen.width / 2 - width / 2
         const top = window.screen.height / 2 - height / 2
-
         const popup = window.open(
-            `http://localhost:4000/api/oauth2/${provider}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/oauth2/${provider}`,
             'oAuth',
             `height=${height}, width=${width}, top=${top}, left=${left}`,
         )
