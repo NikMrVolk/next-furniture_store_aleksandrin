@@ -6,7 +6,7 @@ import { errorCatch, getAccessToken, getContentType } from './api.helpers'
 import { authService } from './auth.service'
 
 const axiosOptions: CreateAxiosDefaults = {
-    baseURL: process.env.API_URL || 'http://localhost:4000/api',
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: getContentType(),
     withCredentials: true,
 }

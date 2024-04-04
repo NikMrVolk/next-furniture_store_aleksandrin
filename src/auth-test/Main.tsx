@@ -22,7 +22,6 @@ export default function Main() {
         e.preventDefault()
         authService.main('registration', value).then(d => setData(d.data))
     }
-
     const handleWindowOpen = (provider: Providers) => {
         const width = 600
         const height = 700
